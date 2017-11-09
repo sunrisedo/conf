@@ -15,8 +15,12 @@ type Config struct {
 	strcet string
 }
 
-func (c *Config) InitConfig(path string) {
+func NewConfig(path string) *Config {
+	c := new(Config)
 	c.Mymap = make(map[string]string)
+	if path == "" {
+		return c
+	}
 
 	f, err := os.Open(path)
 	if err != nil {
@@ -88,6 +92,7 @@ func (c *Config) InitConfig(path string) {
 		key := c.strcet + middle + frist
 		c.Mymap[key] = strings.TrimSpace(second)
 	}
+	return c
 }
 
 func (c *Config) Read(node, key string) string {
